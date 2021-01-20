@@ -2,7 +2,7 @@ const enhancer = require('./enhancer.js');
 // test away!
 
 const brokenSword = {
-    name: 'Gun',
+    name: 'Sword',
     durability: 0,
     enhancement: 0
 }
@@ -121,5 +121,27 @@ describe('Enhancement failure', () => {
         expect(sword.enhancement).toBe(16);
         expect(gun.enhancement).toBe(17);
         expect(mallet.enhancement).toBe(15);
+    })
+})
+
+describe('Gets', () => {
+    it('should not modify name if enhancement is 0', () => {
+        const sword = enhancer.get(brokenSword);
+        const gun = enhancer.get(brokenGun);
+        const mallet = enhancer.get(brokenMallet);
+
+        expect(sword.name).toBe('Sword');
+        expect(gun.name).toBe('Gun');
+        expect(mallet.name).toBe('Mallet');
+    })
+
+    it('should change name to include the enhancement level with a plus sign e.g. "[+7] Iron Sword"', () => {
+        const sword = enhancer.get(maxedSword);
+        const gun = enhancer.get(maxedGun);
+        const mallet = enhancer.get(maxedMallet);
+
+        expect(sword.name).toBe('[+20] Sword');
+        expect(gun.name).toBe('[+20] Gun');
+        expect(mallet.name).toBe('[+20] Mallet');
     })
 })
